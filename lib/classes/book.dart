@@ -7,4 +7,8 @@ class Book {
     required this.bookName,
     required this.id,
   });
+  Book.fromJson(json)
+      : bookName = json["bookName"],
+        authorName = json["authorName"],
+        id = json["id"];
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:library_managment/bloc/login_bloc.dart';
 import 'package:library_managment/bloc/login_state.dart';
+import 'package:library_managment/bloc/search_bloc.dart';
 
 import 'package:library_managment/models/feedback.dart';
 import 'package:library_managment/models/hovered_text.dart';
@@ -51,27 +52,30 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage("assets/images/lib.jpg"),
-          fit: BoxFit.cover,
+    return BlocProvider(
+      create: ((context) => SearchBloc(NoSearchYet())),
+      child: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/lib.jpg"),
+            fit: BoxFit.cover,
+          ),
         ),
-      ),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: ListView(
-          children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height - 100,
-              child: buildStack(),
-            ),
-            const NewArrival(),
-            const Center(
-              child: FeedBack(),
-            ),
-          ],
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: ListView(
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height - 100,
+                child: buildStack(),
+              ),
+              const NewArrival(),
+              const Center(
+                child: FeedBack(),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -172,7 +176,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       Positioned(
-        left: 50,
+        top: 180,
         child: Container(
           child: const IssueCard(),
           decoration: BoxDecoration(
@@ -182,7 +186,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       Positioned(
-        right: 50,
+        // right: 50,
         child: Container(
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
@@ -192,7 +196,6 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
           child: const SearchResult(
-            author: "Dale Carnige",
           ),
         ),
       )
