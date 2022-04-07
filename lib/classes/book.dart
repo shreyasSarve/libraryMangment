@@ -1,6 +1,6 @@
 class Book {
   String bookName;
-  List<String> authorName;
+  List<dynamic> authorName;
   String id;
   Book({
     required this.authorName,

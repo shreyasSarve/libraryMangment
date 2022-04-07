@@ -1,30 +1,77 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:library_managment/bloc/search_bloc.dart';
+import 'package:library_managment/models/book_details.dart';
 
 class SearchResult extends StatelessWidget {
   const SearchResult({
     Key? key,
   }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 400,
+      width: MediaQuery.of(context).size.width*3/5,
+      padding: const EdgeInsets.all(20),
+      margin: const EdgeInsets.symmetric(horizontal: 30),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           BlocBuilder<SearchBloc, SearchState>(
             bloc: BlocProvider.of<SearchBloc>(context),
-            builder: (context, state) {
+            builder: (contex_, state) {
+              print("Inside result $state");
               if (state is NoSearchYet) {
-                const Text("Make Seach");
+                return const Text(
+                  "Make Seach",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                  ),
+                );
               } else if (state is NoBooksFound) {
-                const Text("No Such Book or Author Found");
+                return const Text(
+                  "No Such Book or Author Found",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                  ),
+                );
+              } else if (state is ErrorOccured) {
+                return const Text(
+                  "Error Occured",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                  ),
+                );
               }
-              return const Text("Book Found");
+              SearchBloc bloc = BlocProvider.of<SearchBloc>(context);
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text(
+                    "Book Found",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                    ),
+                  ),
+                  Container(
+                    child: GridView.builder(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 5,
+                        ),
+                        shrinkWrap: true,
+                        itemBuilder: (contex_, index) {
+                          return BookDetails(book: bloc.result[index]);
+                        },
+                        itemCount: bloc.result.length),
+                  )
+                ],
+              );
             },
-          )
+          ),
         ],
       ),
     );

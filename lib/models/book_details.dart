@@ -11,34 +11,55 @@ class BookDetails extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 5),
       decoration: BoxDecoration(
+        image: const DecorationImage(
+          image: AssetImage(
+            "assets/images/book1.jpg",
+          ),
+          fit: BoxFit.cover,
+        ),
         border: Border.all(
           width: 1,
           color: Colors.black,
         ),
       ),
-      child: Row(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Container(
-            width: 100,
-            height: 100,
-            child: Image.asset("assets/images/logo.png"),
+          Text(
+            book!.bookName,
+            style: const TextStyle(
+                color: Colors.black,
+                fontSize: 30,
+                fontWeight: FontWeight.bold),
           ),
-          const SizedBox(
-            width: 10,
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                book!.bookName,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                ),
+          for (int i = 0; i < book!.authorName.length; i++)
+            Text(
+              book!.authorName[i],
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 15,
               ),
-              for (int i = 0; i < book!.authorName.length; i++)
-                Text(book!.authorName[i]),
-            ],
+            ),
+          Container(
+            alignment: Alignment.center,
+            child: const Text(
+              "Click to Issue",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+              ),
+            ),
+            height: 50,
+            margin: const EdgeInsets.all(10),
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Colors.blue.shade300, Colors.blue.shade900],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+                borderRadius: const BorderRadius.all(Radius.circular(20))),
           ),
         ],
       ),

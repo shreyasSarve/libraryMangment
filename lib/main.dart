@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:library_managment/bloc/login_bloc.dart';
 import 'package:library_managment/bloc/login_state.dart';
 import 'package:library_managment/bloc/search_bloc.dart';
+import 'package:library_managment/classes/book.dart';
 
 import 'package:library_managment/models/feedback.dart';
 import 'package:library_managment/models/hovered_text.dart';
@@ -53,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: ((context) => SearchBloc(NoSearchYet())),
+      create: ((context) => SearchBloc(BookFound())),
       child: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -104,9 +105,13 @@ class _MyHomePageState extends State<MyHomePage> {
               return const SizedBox();
             }
             return GestureDetector(
-              onTap: (() => Navigator.of(context).push(MaterialPageRoute(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
                     builder: (context) => const Login(),
-                  ))),
+                  ),
+                );
+              },
               child: Container(
                 margin: const EdgeInsets.only(left: 20, right: 20),
                 child: const HoveredText(
@@ -186,17 +191,16 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       Positioned(
-        // right: 50,
         child: Container(
           padding: const EdgeInsets.all(10),
+          // margin: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             color: Colors.white.withOpacity(.15),
             borderRadius: const BorderRadius.all(
               Radius.circular(10),
             ),
           ),
-          child: const SearchResult(
-          ),
+          child: const SearchResult(),
         ),
       )
     ]);

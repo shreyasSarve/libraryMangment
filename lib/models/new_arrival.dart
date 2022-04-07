@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:library_managment/static/image.dart';
 
 class NewArrival extends StatefulWidget {
   const NewArrival({Key? key}) : super(key: key);
@@ -39,7 +40,7 @@ class _NewArrivalState extends State<NewArrival> {
             child: GridView.builder(
               padding: const EdgeInsets.all(50),
               shrinkWrap: true,
-              itemCount: 7,
+              itemCount: books.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 5,
                 childAspectRatio: 1,
@@ -61,14 +62,14 @@ class _NewArrivalState extends State<NewArrival> {
                         child: Container(
                           alignment: Alignment.center,
                           child: Image.asset(
-                            "assets/images/logo.png",
+                            books[index].path,
                             fit: BoxFit.fill,
                           ),
                         ),
                       ),
-                      const Text(
-                        "Book Name",
-                        style: TextStyle(
+                      Text(
+                        books[index].name,
+                        style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),

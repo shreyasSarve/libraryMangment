@@ -11,6 +11,13 @@ class IssueCard extends StatefulWidget {
 
 class _IssueCardState extends State<IssueCard> {
   final _seachController = TextEditingController();
+  late SearchBloc _searchBloc;
+  @override
+  void initState() {
+    super.initState();
+    _searchBloc = BlocProvider.of<SearchBloc>(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -77,6 +84,7 @@ class _IssueCardState extends State<IssueCard> {
                     color: Colors.white,
                   ),
                   onPressed: () {
+                    print("Inside Card ${_searchBloc.state}");
                     BlocProvider.of<SearchBloc>(context)
                         .add(SearchEvent(_seachController.text));
                   },
