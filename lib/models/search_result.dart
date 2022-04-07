@@ -1,19 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:library_managment/models/book_details.dart';
-import 'package:library_managment/models/details_by_author.dart';
-import 'package:library_managment/static/author.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:library_managment/bloc/search_bloc.dart';
 
 class SearchResult extends StatelessWidget {
-  final String author;
-  const SearchResult({Key? key, required this.author}) : super(key: key);
+  const SearchResult({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 400,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          author != "" ? DetailsByAuthor(author) : Container(),
+          BlocBuilder<SearchBloc, SearchState>(
+            bloc: BlocProvider.of<SearchBloc>(context),
+            builder: (context, state) {
+              if (state is NoSearchYet) {
+                const Text("Make Seach");
+              } else if (state is NoBooksFound) {
+                const Text("No Such Book or Author Found");
+              }
+              return const Text("Book Found");
+            },
+          )
         ],
       ),
     );
